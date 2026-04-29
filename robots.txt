@@ -1,0 +1,18 @@
+# Tripdippity — robots.txt
+# https://tripdippity.com
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://tripdippity.com/sitemap.xml
+
+# Disallow noisy bots
+User-agent: AhrefsBot
+Crawl-delay: 10
+
+User-agent: SemrushBot
+Crawl-delay: 10
+
+User-agent: MJ12bot
+Disallow: /
