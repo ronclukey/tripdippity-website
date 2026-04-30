@@ -628,7 +628,7 @@ Return ONLY valid JSON:
 {"city":"City Name","country":"Country",
 "days":[{"dayNum":1,"label":"Day 1","weekday":"Mon","high":24,"low":17,"condition":"Partly Cloudy","icon":"⛅","rainChance":20,"uvIndex":6,"tip":"One practical weather tip"}]}
 Use realistic seasonal temperatures for ${destination}. Vary conditions naturally. ${days} day objects total.`;
-    fetch("/.netlify/functions/claude",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:1000,messages:[{role:"user",content:prompt}]})})
+    fetch("/.netlify/functions/claude",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-6",max_tokens:1000,messages:[{role:"user",content:prompt}]})})
       .then(r=>r.json())
       .then(d=>{
         const parsed = JSON.parse((d.content?.[0]?.text||"").replace(/```json|```/g,"").trim());
@@ -737,7 +737,7 @@ Be concise, friendly and specific to their destination. 2-4 sentences max per re
         role: m.role==="user"?"user":"assistant",
         content: m.text
       }));
-      const res  = await fetch("/.netlify/functions/claude",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:300,system:context,messages:[...history,{role:"user",content:q}]})});
+      const res  = await fetch("/.netlify/functions/claude",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-6",max_tokens:300,system:context,messages:[...history,{role:"user",content:q}]})});
       const data = await res.json();
       const reply = data.content?.[0]?.text || "Sorry, I couldn't get an answer. Try again!";
       setMessages(m=>[...m, {role:"ai",text:reply}]);
@@ -951,7 +951,7 @@ Return ONLY valid JSON — a single activity object:
 }
 Rating must be 3.8–4.9. Tailor entirely to ${dest}.`;
     try {
-      const res  = await fetch("/.netlify/functions/claude",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:800,messages:[{role:"user",content:prompt}]})});
+      const res  = await fetch("/.netlify/functions/claude",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-6",max_tokens:800,messages:[{role:"user",content:prompt}]})});
       const data = await res.json();
       const text = (data.content?.[0]?.text||"").replace(/```json|```/g,"").trim();
       const parsed = JSON.parse(text);
@@ -1012,7 +1012,7 @@ Each meal array must have exactly 3 entries with varied labels. Include 3–5 ac
     try {
       const res  = await fetch("/.netlify/functions/claude", {
         method:"POST", headers:{"Content-Type":"application/json"},
-        body: JSON.stringify({ model:"claude-sonnet-4-20250514", max_tokens:1500,
+        body: JSON.stringify({ model:"claude-sonnet-4-6", max_tokens:1500,
           messages:[{role:"user", content:prompt}] })
       });
       const data = await res.json();
@@ -1043,7 +1043,7 @@ Return ONLY valid JSON:
 {"destination":"City, Country","heroFact":"surprising fact","activities":[{"id":"a1","name":"Name","category":"Culture|Food|Nature|Nightlife|Art|Adventure|Wellness|Shopping|History|Local","emoji":"🏛","rating":4.7,"reviewCount":2840,"duration":"2-3 hours","priceRange":"Free|$|$$|$$$|$$$$","description":"Two vivid sentences.","insiderTip":"Local tip.","bestTime":"Morning|Afternoon|Evening|Anytime","mustTry":true,"bookingLink":"https://www.getyourguide.com/s/?q=${encodeURIComponent(form.destination)}"}]}
 Ratings 3.8-4.9. Mark 3-4 mustTry:true.`;
     try {
-      const res=await fetch("/.netlify/functions/claude",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:3000,messages:[{role:"user",content:prompt}]})});
+      const res=await fetch("/.netlify/functions/claude",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-6",max_tokens:3000,messages:[{role:"user",content:prompt}]})});
       const data=await res.json();
       const parsed=JSON.parse((data.content?.[0]?.text||"").replace(/```json|```/g,"").trim());
       setActivities(parsed.activities||[]);
@@ -1093,7 +1093,7 @@ Exactly 5 results.`;
     try {
       const res = await fetch("/.netlify/functions/claude",{
         method:"POST",headers:{"Content-Type":"application/json"},
-        body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:2500,messages:[{role:"user",content:prompt}]})
+        body:JSON.stringify({model:"claude-sonnet-4-6",max_tokens:2500,messages:[{role:"user",content:prompt}]})
       });
       const data = await res.json();
       const parsed = JSON.parse((data.content?.[0]?.text||"").replace(/```json|```/g,"").trim());
@@ -1160,9 +1160,9 @@ badge: "best"|"fastest"|"comfort"|null. One badge per option max. 5 options tota
 
     try {
       const [itinRes, hotelRes, arrRes] = await Promise.all([
-        fetch("/.netlify/functions/claude",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:5000,messages:[{role:"user",content:itinPrompt}]})}),
-        fetch("/.netlify/functions/claude",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:2500,messages:[{role:"user",content:hotelPrompt}]})}),
-        fetch("/.netlify/functions/claude",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:2000,messages:[{role:"user",content:arrivalPrompt}]})})
+        fetch("/.netlify/functions/claude",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-6",max_tokens:5000,messages:[{role:"user",content:itinPrompt}]})}),
+        fetch("/.netlify/functions/claude",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-6",max_tokens:2500,messages:[{role:"user",content:hotelPrompt}]})}),
+        fetch("/.netlify/functions/claude",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-6",max_tokens:2000,messages:[{role:"user",content:arrivalPrompt}]})})
       ]);
       const [itinData, hotelData, arrData] = await Promise.all([itinRes.json(), hotelRes.json(), arrRes.json()]);
       const itinParsed  = JSON.parse((itinData.content?.[0]?.text||"").replace(/```json|```/g,"").trim());
